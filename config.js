@@ -23,6 +23,7 @@ System.config({
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.0-beta.2.0.1",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.2.0.1",
     "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.2.0.1",
+    "aurelia-flux": "github:tkhyn/aurelia-flux@master",
     "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.2.0.1",
     "aurelia-history-browser": "npm:aurelia-history-browser@1.0.0-beta.2.0.1",
     "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.2.0.1",
@@ -58,6 +59,13 @@ System.config({
     },
     "github:jspm/nodelibs-vm@0.1.0": {
       "vm-browserify": "npm:vm-browserify@0.0.4"
+    },
+    "github:tkhyn/aurelia-flux@master": {
+      "aurelia-binding": "npm:aurelia-binding@1.0.0-beta.2.0.7",
+      "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.0.0-beta.2.1.1",
+      "aurelia-router": "npm:aurelia-router@1.0.0-beta.2.0.1",
+      "aurelia-templating": "npm:aurelia-templating@1.0.0-beta.3.0.3",
+      "bluebird": "npm:bluebird@2.10.2"
     },
     "github:twbs/bootstrap@3.3.6": {
       "jquery": "npm:jquery@2.2.4"
@@ -188,6 +196,9 @@ System.config({
       "aurelia-task-queue": "npm:aurelia-task-queue@1.0.0-beta.2.0.1"
     },
     "npm:babel-runtime@5.8.38": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:bluebird@2.10.2": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:buffer@3.6.0": {

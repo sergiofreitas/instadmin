@@ -1,10 +1,17 @@
-//import {computedFrom} from 'aurelia-framework';
+import {inject} from 'aurelia-framework';
+import {Dispatcher, handle} from 'aurelia-flux';
 
+
+@inject(Dispatcher)
 export class Welcome {
   heading = 'Welcome to the Aurelia Navigation App!';
   firstName = 'John';
   lastName = 'Doe';
   previousValue = this.fullName;
+
+  constructor(dispatcher) {
+      this.dispatcher = dispatcher;
+  }
 
   //Getters can't be directly observed, so they must be dirty checked.
   //However, if you tell Aurelia the dependencies, it no longer needs to dirty check the property.
@@ -17,7 +24,13 @@ export class Welcome {
 
   submit() {
     this.previousValue = this.fullName;
-    alert(`Welcome, ${this.fullName}!`);
+    this.dispatcher.dispatch('message.send', this.fullName);
+  }
+
+  @handle('message.send')
+  logSend(action, message) {
+    console.log(action);
+    alert(message);
   }
 
   canDeactivate() {
