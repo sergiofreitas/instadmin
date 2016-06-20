@@ -16,9 +16,10 @@ export class RouterConfig {
 			route_config.addPipelineStep('authorize', AuthorizeStep);
 
       route_config.map([
-        { route: ['', 'welcome'], name: 'welcome',      moduleId: 'pages/welcome',      nav: true, title: 'Welcome' },
-        { route: 'users',         name: 'users',        moduleId: 'pages/users',        nav: true, title: 'Github Users' },
-        { route: 'child-router',  name: 'child-router', moduleId: 'pages/child-router', nav: true, title: 'Child Router' }
+        { route: 'entity/:entity',   name: 'entity_list',      moduleId: 'pages/entity/list',      nav: false },
+        { route: 'entity/:entity/:id',   name: 'entity_single',      moduleId: 'pages/entity/single',      nav: false },
+        { route: ['', 'dashboard'], name: 'dashboard',      moduleId: 'pages/dashboard/index',      nav: true, title: 'Dashboard' },
+        { route: 'settings', name: 'settings',      moduleId: 'pages/system/settings',      nav: true, title: 'Settings' }
       ]);
     }
 

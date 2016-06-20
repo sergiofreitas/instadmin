@@ -15,8 +15,13 @@
 
     <div class="collapse navbar-collapse" id="skeleton-navigation-navbar-collapse">
       <ul class="nav navbar-nav">
+        <!-- change to put the dashboard on head and settings/profile on footer -->
         <li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
           <a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href.bind="row.href">${row.title}</a>
+        </li>
+
+        <li>
+          <a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href="#/entity/clients">Clientes</a>
         </li>
       </ul>
 
