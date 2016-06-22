@@ -1,12 +1,19 @@
 import 'bootstrap';
 import {config} from './config';
-
+import Entities from './entities/entities';
 
 export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
     .plugin('aurelia-flux')
+    .plugin('aurelia-api', (config) => {
+      for(var key in Entities) {
+          if(Entities.hasOwnProperty(key)) {
+            config.registerEndpoint(key, Entities[key].endpoint.url);
+          }
+      }
+    })
     .plugin('aurelia-auth', (baseConfig) => {
       baseConfig.configure(config);
     })

@@ -1,5 +1,27 @@
 <template>
   <section class="au-animate">
     <h2>Lista de um item</h2>
+
+    <table class="ui fixed table">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th repeat.for="column of entity.columns" click.delegate="sortItems(column)">${column.label}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr repeat.for="item of store.items">
+          <td>
+            <input type="checkbox" name="select" value.bind="item.id" checked.bind="$parent.selectedRows">
+            <button>Detalhes</button>
+          </td>
+          <td repeat.for="column of entity.columns">
+            ${item[column.key]}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
   </section>
 </template>
