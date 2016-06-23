@@ -1,9 +1,0 @@
-{
-  "clients": [
-    {"id": 1, "name": "Exemplo 1", "description": "Descrição do conteudo"},
-    {"id": 2, "name": "Exemplo 2", "description": "Descrição do conteudo"},
-    {"id": 3, "name": "Exemplo 3", "description": "Descrição do conteudo"},
-    {"id": 4, "name": "Exemplo 4", "description": "Descrição do conteudo"},
-    {"id": 5, "name": "Exemplo 5", "description": "Descrição do conteudo"}
-  ]
-}
