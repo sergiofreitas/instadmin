@@ -6,12 +6,14 @@ import {Api} from './api';
 @inject(Dispatcher, Entities, Api)
 export class EntityStore {
   _items = [];
-  _filters = new Map();
+  _item = null;
+  _filters = {};
 
   constructor(dispatcher, entities, api) {
     this.dispatcher = dispatcher
     this.entities = entities;
     this.api = api;
+    this._filters.limit = 30;
   }
 
   configure(key) {
@@ -30,20 +32,46 @@ export class EntityStore {
     return this._items;
   }
 
-  fetch(page) {
-    this.dispatcher.dispatch('entities.lock');
+  get item() {
+    return this._item;
+  }
 
-    // use the filter defined
-    return this.api.find({page: page})
-      .then(items => {
-        this._items = items;
-        this.dispatcher.dispatch('entities.unlock');
-      });
+  get filters() {
+    return this._filters;
   }
 
   @handle('entities.fetch')
   getItems(action, options) {
-    return this.fetch(options);
+    this.dispatcher.dispatch('entities.fetch.start');
+
+    let filters = this.filters;
+    filters.skip = (options-1)*filters.limit;
+
+    return this.api.find({filter: filters})
+      .then(items => {
+        this._items = items;
+        this.dispatcher.dispatch('entities.fetch.done', items);
+      }).catch(err => {
+        this.dispatcher.dispatch('entities.fetch.error', err);
+      });
+  }
+
+  @handle('entities.get')
+  getItem(action, item) {
+    this.dispatcher.dispatch('entities.get.start');
+    this._item = this._items.find(obj => obj.id === item);
+
+    if ( this._item ){
+      this.dispatcher.dispatch('entities.get.done', this._item);
+    } else {
+      return this.api.get(item)
+        .then(response => {
+          this._item = response;
+          this.dispatcher.dispatch('entities.get.done', this._item);
+        }).catch(err => {
+          this.dispatcher.dispatch('entities.get.error', err);
+        });
+    }
   }
 
   @handle('entities.filter')
@@ -53,26 +81,42 @@ export class EntityStore {
 
   @handle('entities.create')
   createItem(action, item) {
-    this.dispatcher.dispatch('entities.lock', {message: 'enviando dados ao servidor', type: 'info'});
+    this.dispatcher.dispatch('entities.create.start');
     // send data to server
-    this.dispatcher.dispatch('entities.unlock', {message: 'registro salvo com sucerro', type: 'success'});
+    return this.api.post(item)
+      .then(response => {
+        this.dispatcher.dispatch('entities.create.done', response);
+      })
+      .catch(err => {
+        this.dispatcher.dispatch('entities.create.error', err);
+      });
   }
 
-  @handle('entities.edit')
-  editItem(action, item){
-    this.dispatcher.dispatch('entities.lock', {message: 'enviando dados ao servidor', type: 'info'});
+  @handle('entities.update')
+  editItem(action, payload){
+    this.dispatcher.dispatch('entities.update.start');
     // send data to server
-    this.dispatcher.dispatch('entities.unlock', {message: 'registro salvo com sucerro', type: 'success'});
+    return this.api.update(payload.criteria, payload.item)
+      .then(response => {
+        this.dispatcher.dispatch('entities.update.done', response);
+      })
+      .catch(err => {
+        this.dispatcher.dispatch('entities.update.error', err);
+      });
   }
 
   @handle('entities.destroy')
   destroyItem(action, item){
-    this.dispatcher.dispatch('entities.lock', {message: 'enviando dados ao servidor', type: 'info'});
+    this.dispatcher.dispatch('entities.destroy.start');
     // send data to server
-    this.dispatcher.dispatch('entities.unlock', {message: 'registro salvo com sucerro', type: 'success'});
+    return this.api.destroy(item)
+      .then(response => {
+        this.dispatcher.dispatch('entities.destroy.done', response);
+      })
+      .catch(err => {
+        this.dispatcher.dispatch('entities.destroy.error', err);
+      });
   }
 
-/*  @handle('entity.load')
-
-  @handle('entity.edit')*/
+/*  @handle('entity.load') */
 }

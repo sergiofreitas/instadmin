@@ -18,7 +18,22 @@ export class Api {
     return this.api.find('', options).then(fn);
   }
 
-  post(object) {
+  get(id) {
+    let fn = this.entity.transform.from || function(r){ return r; };
+    return this.api.find(id).then(fn);
+  }
 
+  post(object) {
+    let fn = this.entity.transform.to || function(r){ return r; };
+    return this.api.post('', object).then(fn);
+  }
+
+  update(criteria, object) {
+    let fn = this.entity.transform.to || function(r){ return r; };
+    return this.api.update('', criteria, object).then(fn);
+  }
+
+  destroy(id) {
+    return this.api.destroy('', id);
   }
 }

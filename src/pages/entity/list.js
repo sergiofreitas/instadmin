@@ -1,5 +1,4 @@
 import {inject} from 'aurelia-framework';
-import Entities from '../../entities/entities';
 import {Dispatcher, handle} from 'aurelia-flux';
 import {Router} from 'aurelia-router';
 import {EntityStore} from './store';
@@ -31,35 +30,54 @@ export class EntityList {
     return this.dispatcher.dispatch('entities.fetch', page);
   }
 
+  details(item_id) {
+    return this.router.navigateToRoute('entity_single', {entity: this.entity.key, id: item_id});
+  }
+
   save(item) {
     return this.dispatcher.dispatch('entities.create', item);
   }
 
-  @handle('entities.lock')
+  update(id) {
+    return this.dispatcher.dispatch('entities.update', {criteria: id, item: item});
+  }
+
+  destroy(id) {
+    return this.dispatcher.dispatch('entities.destroy', id);
+  }
+
+
+
+  @handle('entities.*.start')
   lockUI(action, state) {
     this.loading = true;
 
-    if ( state && state.message ){
-      console.log(state);
-    }
+    console.log('starting something', action);
   }
 
-  @handle('entities.unlock')
+  @handle('entities.*.done')
   unlockUI(action, state) {
     this.loading = false;
 
-    if ( state && state.message ){
-      console.log(state);
+    var refreshActions = [
+      'entities.create.done',
+      'entities.update.done',
+      'entities.destroy.done'
+    ];
+
+    if ( refreshActions.indexOf(action) !== -1 ){
+      this.dispatcher.dispatch('entities.fetch', 1);
     }
+
+    console.log('called the action', action);
+  }
+
+  @handle('entities.*.error')
+  errorUI(action, state) {
+    console.log('an error occour', action, state);
   }
 
 /*
   @handle('message.*') <-- use this for output all messages for client
   */
-}
-
-export class JsonValueConverter {
-    toView(value) {
-        return JSON.stringify(value, null, "\t");
-    }
 }

@@ -14,7 +14,7 @@
         <tr repeat.for="item of store.items">
           <td>
             <input type="checkbox" name="select" value.bind="item.id" checked.bind="$parent.selectedRows">
-            <button>Detalhes</button>
+            <button click.delegate="details(item.id)">Detalhes</button>
           </td>
           <td repeat.for="column of entity.columns">
             ${item[column.key]}
@@ -23,5 +23,6 @@
       </tbody>
     </table>
 
+  <button click.delegate="save()">Salvar item</button>
   </section>
 </template>
