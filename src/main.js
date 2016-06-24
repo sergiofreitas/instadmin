@@ -1,4 +1,5 @@
-import 'bootstrap';
+import 'semantic-ui';
+
 import {config} from './config';
 import Entities from './entities/entities';
 

@@ -15,3 +15,14 @@ export class FieldSelect
   }
   // make a form that looks amazing!
 }
+
+
+export class ToStringValueConverter {
+  toView(value) {
+    if ( value ){
+      return value.toString();
+    } else {
+      return value;
+    }
+  }
+}
