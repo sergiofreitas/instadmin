@@ -1,10 +1,10 @@
 <template>
-  <require from='../../components/formBuilder'></require>
+  <require from='../../components/form-builder'></require>
 
   <section class="au-animate">
     <h2>Item especifico</h2>
 
-    <form-builder model="item"></form-builder>
+    <form-builder schema.bind="entity.fields" model.bind="item"></form-builder>
 
   <button click.delegate="save()">Salvar item</button>
   </section>

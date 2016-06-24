@@ -10,9 +10,9 @@ export class EntitySingle {
   item = {};
 
   constructor(dispatcher, router, store) {
-      this.dispatcher = dispatcher;
-      this.router = router;
-      this.store = store;
+    this.dispatcher = dispatcher;
+    this.router = router;
+    this.store = store;
   }
 
   activate(params) {
@@ -71,5 +71,4 @@ export class EntitySingle {
     console.log('an error occour', action, state);
     return this.router.navigateToRoute('entity_list', {entity: this.entity.key});
   }
-
 }

@@ -21,7 +21,11 @@ var entity = {
     {key: 'end', label: 'Fim', type: 'text'}
   ],
   fields: [
-    {key: 'name', label: 'Nome', type: 'text', options: {}},
+    {key: 'name', label: 'Nome', type: 'input'},
+    {key: 'id', label: 'Inicio', type: 'select', choices: {
+      '1': "outro",
+      '2': "dois",
+    }},
   ]
 }
 
