@@ -1,6 +1,6 @@
 import 'semantic-ui';
 
-import {config} from './config';
+import config from './config';
 import Entities from './entities/entities';
 
 export function configure(aurelia) {
@@ -8,15 +8,15 @@ export function configure(aurelia) {
     .standardConfiguration()
     .developmentLogging()
     .plugin('aurelia-flux')
-    .plugin('aurelia-api', (config) => {
+    .plugin('aurelia-api', (api_config) => {
       for(var key in Entities) {
           if(Entities.hasOwnProperty(key)) {
-            config.registerEndpoint(key, Entities[key].endpoint.url);
+            api_config.registerEndpoint(key, Entities[key].endpoint.url);
           }
       }
     })
     .plugin('aurelia-auth', (baseConfig) => {
-      baseConfig.configure(config);
+      baseConfig.configure(config.providers);
     })
     ;
 

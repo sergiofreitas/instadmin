@@ -1,28 +1,40 @@
 <template>
+  <require from="../../components/tablesort.js"></require>
   <section class="au-animate">
-    <h2>Lista de um item</h2>
+    <div class="ui container">
+      <h2 class="ui header left floated">${entity.name}</h2>
 
-    <table class="ui fixed table">
-      <thead>
-        <tr>
-          <th>&nbsp;</th>
-          <th repeat.for="column of entity.columns" click.delegate="sortItems(column)">${column.label}</th>
-        </tr>
-      </thead>
+      <button class="ui button basic right floated" click.delegate="details('create')">Novo</button>
 
-      <tbody>
-        <tr repeat.for="item of store.items">
-          <td>
-            <input type="checkbox" name="select" value.bind="item.id" checked.bind="$parent.selectedRows">
-            <button click.delegate="details(item.id)">Detalhes</button>
-          </td>
-          <td repeat.for="column of entity.columns">
-            ${item[column.key]}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <table class="ui celled padded table">
+        <thead>
+          <tr>
+            <th repeat.for="column of entity.columns">${column.label}</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
 
-  <button click.delegate="save()">Salvar item</button>
+        <tbody>
+          <tr repeat.for="item of store.items">
+            <td repeat.for="column of entity.columns">
+              ${item[column.key] | transform:column}
+            </td>
+            <td>
+              <!--<input type="checkbox" name="select" value.bind="item.id" checked.bind="$parent.selectedRows">-->
+              <div class="ui small icon buttons">
+                <button class="ui button" click.delegate="details(item.id)">
+                  <i class="icon edit"></i>
+                </button>
+                <button class="ui button" click.delegate="destroy(item.id)">
+                  <i class="icon trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  <!--<button click.delegate="save()">Salvar item</button>-->
   </section>
 </template>

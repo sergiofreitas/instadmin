@@ -16,8 +16,6 @@ export class FormBuilder
       f.template = this.setTemplate(f);
       this.fields.push(f);
     });
-
-    console.log(this.schema, this.model);
   }
 
   setTemplate(field){
@@ -25,10 +23,4 @@ export class FormBuilder
   }
 
   // make a form that looks amazing!
-}
-
-export class JsonValueConverter {
-    toView(value) {
-        return JSON.stringify(value, null, "\t");
-    }
 }

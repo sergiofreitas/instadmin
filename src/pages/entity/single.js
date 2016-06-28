@@ -7,6 +7,7 @@ import {EntityStore} from './store';
 @inject(Dispatcher, Router, EntityStore)
 export class EntitySingle {
   entity = null;
+  isNew = false;
   item = {};
 
   constructor(dispatcher, router, store) {
@@ -24,15 +25,21 @@ export class EntitySingle {
 
     if ( params.id !== 'create' ){
       return this.dispatcher.dispatch('entities.get', params.id);
+    } else {
+      this.isNew = true;
     }
   }
 
-  save() {
-    return this.dispatcher.dispatch('entities.create', this.entity);
+  cancel() {
+    return this.router.navigateToRoute('entity_list', {entity: this.entity.key});
   }
 
-  update(item) {
-    return this.dispatcher.dispatch('entities.update', {criteria: item.id, item: item});
+  save() {
+    if (this.isNew) {
+      return this.dispatcher.dispatch('entities.create', this.item);
+    } else {
+      return this.dispatcher.dispatch('entities.update', {criteria: this.item.id, item: this.item});
+    }
   }
 
   @handle('entities.*.start')
@@ -53,15 +60,16 @@ export class EntitySingle {
     this.loading = false;
 
     var refreshActions = [
+      'entities.create.done',
       'entities.update.done',
       'entities.destroy.done'
     ];
 
+    console.log('called the action', action, state);
+
     if ( refreshActions.indexOf(action) !== -1 ){
       return this.router.navigateToRoute('entity_list', {entity: this.entity.key});
     }
-
-    console.log('called the action', action);
   }
 
   @handle('entities.*.error')

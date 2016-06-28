@@ -2,6 +2,7 @@ import {inject} from 'aurelia-framework';
 import {Dispatcher, handle} from 'aurelia-flux';
 import {Router} from 'aurelia-router';
 import {EntityStore} from './store';
+import moment from 'moment';
 
 
 @inject(Dispatcher, Router, EntityStore)
@@ -26,20 +27,16 @@ export class EntityList {
     return this.loadPage(1);
   }
 
+  attached() {
+    // sortable stuff
+  }
+
   loadPage(page) {
     return this.dispatcher.dispatch('entities.fetch', page);
   }
 
   details(item_id) {
     return this.router.navigateToRoute('entity_single', {entity: this.entity.key, id: item_id});
-  }
-
-  save(item) {
-    return this.dispatcher.dispatch('entities.create', item);
-  }
-
-  update(id) {
-    return this.dispatcher.dispatch('entities.update', {criteria: id, item: item});
   }
 
   destroy(id) {
@@ -80,4 +77,33 @@ export class EntityList {
 /*
   @handle('message.*') <-- use this for output all messages for client
   */
+}
+
+export class TransformValueConverter {
+  conversions = {
+    text: function(value, column) {
+      if ( value && column.options && column.options.maxlength ){
+          value = value.replace(/(<([^>]+)>)/ig,"");
+          let truncated = value.substring(0, column.options.maxlength);
+          if ( truncated != value ) {
+            truncated += '...';
+          }
+          return truncated;
+      }
+      return value;
+    },
+    image: function(value){
+      return '<img src="'+value+'"/>';
+    },
+    select: function(value, column){
+      return column.options.choices[value] || value;
+    },
+    date: function(value, column) {
+      return moment(value).format(column.options.format);
+    }
+  };
+
+  toView(value, column) {
+    return this.conversions[column.type](value, column);
+  }
 }

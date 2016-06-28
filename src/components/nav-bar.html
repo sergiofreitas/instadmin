@@ -1,35 +1,11 @@
 <template bindable="router">
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse">
-        <span class="sr-only">Toggle Navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">
-        <i class="fa fa-home"></i>
-        <span>${router.title}</span>
-      </a>
+  <div class="ui top fixed menu borderless">
+    <div class="header item">${router.title}</div>
+    <a repeat.for="row of router.navigation" href.bind="row.href" class="item ${row.isActive ? 'active' : ''}">${row.title}</a>
+    <a repeat.for="entity of entities" class="item" href="#/entity/${entity.key}">${entity.name}</a>
+
+    <div class="right menu">
+      <a class="item" href="#/logout">Sair</a>
     </div>
-
-    <div class="collapse navbar-collapse" id="skeleton-navigation-navbar-collapse">
-      <ul class="nav navbar-nav">
-        <!-- change to put the dashboard on head and settings/profile on footer -->
-        <li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
-          <a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href.bind="row.href">${row.title}</a>
-        </li>
-
-        <li>
-          <a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href="#/entity/clients">Clientes</a>
-        </li>
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right">
-        <li class="loader" if.bind="router.isNavigating">
-          <i class="fa fa-spinner fa-spin fa-2x"></i>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  </div>
 </template>

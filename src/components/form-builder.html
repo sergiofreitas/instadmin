@@ -1,5 +1,5 @@
 <template>
-
-  <compose repeat.for="field of fields" model.bind="field" view-model.bind="field.template"></compose>
-
+  <div class="ui form">
+    <compose repeat.for="field of fields" model.bind="field" view-model.bind="field.template" class="field"></compose>
+  </div>
 </template>

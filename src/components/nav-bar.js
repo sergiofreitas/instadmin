@@ -2,14 +2,15 @@ import {bindable} from 'aurelia-framework';
 import {inject} from 'aurelia-framework';
 import {AuthService} from 'aurelia-auth';
 import {BindingEngine} from 'aurelia-framework';
+import Entities from '../entities/entities';
 
-@inject(AuthService, BindingEngine)
+@inject(AuthService, BindingEngine, Entities)
 export class NavBar {
     _isAuthenticated = false;
     displayName = "";
     @bindable router = null;
     subscription = {};
-    constructor(auth, bindingEngine) {
+    constructor(auth, bindingEngine, entities) {
         this.auth = auth;
         this.bindingEngine = bindingEngine;
         this._isAuthenticated = this.auth.isAuthenticated();
@@ -21,6 +22,15 @@ export class NavBar {
                     });
                 }
             });
+
+        this.entities = [];
+        for( var i in entities ) {
+          if ( entities.hasOwnProperty(i) ){
+            let entity = entities[i];
+            entity.key = i;
+            this.entities.push(entity);
+          }
+        }
     }
 
     get isAuthenticated() {

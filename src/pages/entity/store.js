@@ -61,7 +61,15 @@ export class EntityStore {
     this.dispatcher.dispatch('entities.get.start');
     this._item = this._items.find(obj => obj.id === item);
 
-    if ( this._item ){
+    return this.api.get(item)
+      .then(response => {
+        this._item = response;
+        this.dispatcher.dispatch('entities.get.done', this._item);
+      }).catch(err => {
+        this.dispatcher.dispatch('entities.get.error', err);
+      });
+
+/*    if ( this._item ){
       this.dispatcher.dispatch('entities.get.done', this._item);
     } else {
       return this.api.get(item)
@@ -71,7 +79,7 @@ export class EntityStore {
         }).catch(err => {
           this.dispatcher.dispatch('entities.get.error', err);
         });
-    }
+    }*/
   }
 
   @handle('entities.filter')

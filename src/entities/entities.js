@@ -1,8 +1,15 @@
 
-import Client from './clients';
+import Menus from './menus';
+import Contents from './contents';
+import Sessions from './sessions';
+import Speakers from './speakers';
 
 var entities = {
-  'clients': Client
+  'contents': Contents,
+  'sessions': Sessions,
+  'speakers': Speakers,
+  'menus': Menus,
+
 }
 
 export default entities;

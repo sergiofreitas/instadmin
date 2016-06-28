@@ -1,28 +1,19 @@
 {
   "name": "Evento",
+  "plural": "Eventos",
   "base": "PersistedModel",
-  "strict": false,
-  "idInjection": false,
+  "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "id": {
-      "type": "number",
-      "id": true,
-      "index": true
+    "nome": {
+      "type": "string",
+      "required": false
     },
-    "name": {
-      "type": "string"
-    },
-    "start": {
-      "type": "date"
-    },
-    "end": {
-      "type": "date"
-    },
-    "logo": {
-      "type": "string"
+    "active": {
+      "type": "boolean",
+      "required": false
     }
   },
   "validations": [],

@@ -2,10 +2,15 @@
   <require from='../../components/form-builder'></require>
 
   <section class="au-animate">
-    <h2>Item especifico</h2>
+    <div class="ui container">
+      <h2 class="ui header">${entity.name}</h2>
 
-    <form-builder schema.bind="entity.fields" model.bind="item"></form-builder>
+      <form-builder schema.bind="entity.fields" model.bind="item"></form-builder>
 
-  <button click.delegate="save()">Salvar item</button>
+      <div class="single-actions">
+        <button class="ui button" click.delegate="cancel()">Cancelar</button>
+        <button class="ui button primary" click.delegate="save()">Salvar</button>
+      </div>
+    </div>
   </section>
 </template>

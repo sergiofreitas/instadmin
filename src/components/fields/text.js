@@ -1,5 +1,5 @@
 
-export class FieldInput
+export class FieldText
 {
   activate(data) {
 /*    this.field = data.field;

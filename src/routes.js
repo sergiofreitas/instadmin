@@ -16,10 +16,11 @@ export class RouterConfig {
 			route_config.addPipelineStep('authorize', AuthorizeStep);
 
       route_config.map([
-        { route: 'entity/:entity',   name: 'entity_list',      moduleId: 'pages/entity/list',      nav: false },
-        { route: 'entity/:entity/:id',   name: 'entity_single',      moduleId: 'pages/entity/single',      nav: false },
-        { route: ['', 'dashboard'], name: 'dashboard',      moduleId: 'pages/dashboard/index',      nav: true, title: 'Dashboard' },
-        { route: 'settings', name: 'settings',      moduleId: 'pages/system/settings',      nav: true, title: 'Settings' }
+        { route: 'login', name: 'login', moduleId: 'pages/system/login', nav: false },
+        { route: 'entity/:entity', name: 'entity_list', moduleId: 'pages/entity/list', nav: false },
+        { route: 'entity/:entity/:id',   name: 'entity_single',      moduleId: 'pages/entity/single', nav: false },
+        { route: ['', 'dashboard'], name: 'dashboard', moduleId: 'pages/dashboard/index', nav: false, title: 'Dashboard' }
+        /*{ route: 'settings', name: 'settings', moduleId: 'pages/system/settings', nav: true, title: 'Settings' }*/
       ]);
     }
 

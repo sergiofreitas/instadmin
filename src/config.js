@@ -3,18 +3,22 @@
   Configuration for env development
  */
 var dev = {
-  title: 'Skeleton',
+  title: 'SINCEP',
   baseUrl: 'http://localhost:3000/api',
-  providers: {}
+  providers: {
+    loginUrl: 'http://0.0.0.0:3000/api/Users/login'
+  }
 };
 
 /*
   Configuration for env production
  */
 var prod = {
-  title: 'Skeleton',
+  title: 'SINCEP',
   baseUrl: 'http://example.com/api',
-  providers: {}
+  providers: {
+    loginUrl: 'http://0.0.0.0:3000/api/Users/login'
+  }
 };
 
 

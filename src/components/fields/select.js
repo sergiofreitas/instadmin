@@ -12,6 +12,12 @@ export class FieldSelect
         this.choices.push({val: i, label: list[i]});
       }
     }
+
+
+  }
+
+  attached() {
+    $('.ui.dropdown').dropdown();
   }
   // make a form that looks amazing!
 }

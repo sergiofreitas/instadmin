@@ -1,0 +1,32 @@
+<template>
+  <section class="au-animate">
+
+    <div class="ui centered grid">
+      <div class="column six wide">
+        <h2 class="ui large header center aligned">Login</h2>
+
+        <form class="ui form ${message ? 'error' : ''}" submit.delegate="login()">
+          <div class="ui error message">
+            <p>${message}</p>
+          </div>
+
+          <div class="field">
+            <label>Email</label>
+            <input type="text" value.bind="email" placeholder="Email">
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" value.bind="password" placeholder="Password">
+          </div>
+
+          <button type="submit" class="ui blue button">
+            <i class="icon user"></i>
+            Entrar
+          </button>
+        </form>
+
+      </div>
+    </div>
+
+  </section>
+</template>
