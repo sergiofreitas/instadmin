@@ -22,7 +22,7 @@ var entity = {
     {key: 'role', label: 'Titulo', type: 'text'},
     {key: 'avatar', label: 'Imagem', type: 'text'},
     {key: 'bio', label: "Biografia", type: 'textarea', options: {wysiwyg: true}},
-    // put a relationship here
+    {key: 'eventId', label: 'Evento', type: 'select', remote: {endpoint: 'events', label: 'name'}},
   ]
 }
 

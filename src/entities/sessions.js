@@ -21,10 +21,10 @@ var entity = {
   ],
   fields: [
     {key: 'title', label: 'Titulo', type: 'text'},
-    // change to a datetime picker
     {key: 'date', label: 'Data', type: 'date'},
     {key: 'description', label: "Descrição", type: 'textarea'},
-    // put a relationship here
+    {key: 'eventId', label: 'Evento', type: 'select', remote: {endpoint: 'events', label: 'name'}},
+    {key: 'eventId', label: 'Evento', type: 'select', remote: {endpoint: 'events', label: 'name'}, multiple: true},
   ]
 }
 

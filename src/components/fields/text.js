@@ -1,15 +1,14 @@
+import {inject, bindable, bindingMode} from 'aurelia-framework';
 
-export class FieldText
+@bindable('field')
+@bindable({
+  name: 'value',
+  defaultBindingMode: bindingMode.twoWay
+})
+@inject(Element)
+export class FieldTextCustomElement
 {
-  activate(data) {
-/*    this.field = data.field;
-    this.model = data.model;*/
+  constructor(element) {
+      this.element = element;
   }
-  // make a form that looks amazing!
-}
-
-export class JsonValueConverter {
-    toView(value) {
-        return JSON.stringify(value, null, "\t");
-    }
 }

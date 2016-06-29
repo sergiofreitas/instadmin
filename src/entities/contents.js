@@ -27,15 +27,16 @@ var entity = {
     {key: 'intro', label: 'Introdução', type: 'textarea'},
     {key: 'text', label: 'Conteúdo', type: 'textarea', options: {wysiwyg: true}},
     {key: 'type', label: 'Tipo', type: 'select', choices: {
-      'expositores': 'expositores',
-      'page': 'page',
-      'noticias': 'noticias',
-      'patrocinadores': 'patrocinadores',
-      'videos': 'videos'
+      'expositores': 'Expositores',
+      'page': 'Page',
+      'noticias': 'Notícias',
+      'patrocinadores': 'Patrocinadores',
+      'videos': 'Vídeos'
     }},
+    {key: 'eventId', label: 'Evento', type: 'select', remote: {endpoint: 'events', label: 'name'}},
     {key: 'status', label: 'Status', type: 'select', choices: {
-      'draft': 'draft',
-      'published': 'published'
+      'draft': 'Rascunho',
+      'published': 'Publicado'
     }}
   ]
 }

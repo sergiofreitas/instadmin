@@ -1,6 +1,6 @@
 <template>
     <label for.bind="field.key">${field.label}</label>
-    <select value.bind="model[field.key] | toString" class="ui dropdown">
-      <option repeat.for="opt of choices" model.bind="opt.val">${opt.label}</option>
+    <select value.bind="value | toString" class="ui search fluid dropdown">
+      <option repeat.for="opt of choices" value.bind="opt.val">${opt.label}</option>
     </select>
 </template>

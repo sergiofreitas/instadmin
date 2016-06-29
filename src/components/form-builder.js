@@ -8,19 +8,13 @@ import {customElement, bindable, bindingMode} from 'aurelia-framework';
 })
 export class FormBuilder
 {
-  fields = [];
-  bind() {
-    this.schema.map(f => {
-      // define the template
-      f.template = this.setTemplate(f);
-
-      this.fields.push(f);
-    });
+  modelChanged() {
+    console.log('model changed');
   }
+}
 
-  setTemplate(field){
-    return './fields/'+field.type;
+export class FieldValueConverter {
+  toView(value, attr) {
+    return value[attr];
   }
-
-  // make a form that looks amazing!
 }

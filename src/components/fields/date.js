@@ -1,24 +1,20 @@
-import {inject, BindingEngine} from 'aurelia-framework';
+import {inject, bindable, bindingMode} from 'aurelia-framework';
 import moment from 'moment';
 
-@inject(BindingEngine)
-export class FieldDate
+@bindable('field')
+@bindable({
+  name: 'value',
+  defaultBindingMode: bindingMode.twoWay
+})
+@inject(Element)
+export class FieldDateCustomElement
 {
-  constructor(bindingEngine) {
-    this.value = '';
-
-    let subscription = bindingEngine.propertyObserver(this, 'value')
-      .subscribe((newValue, oldValue) => this.field.model[this.field.key] = newValue);
-
-  }
-
-  activate(data) {
-    this.field = data;
-    console.log(this.field.model);
+  constructor(element) {
+    this.element = element;
   }
 
   attached() {
-    $('.ui.calendar').calendar(Object.assign({
+    $(this.element).find('.ui.calendar').calendar(Object.assign({
       text: {
         days: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
         months: 'Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro'.split('_'),
@@ -28,6 +24,7 @@ export class FieldDate
         am: 'AM',
         pm: 'PM'
       },
+      onChange: (date) => { this.value = date; },
       formatter: {
         date: function(value){
           return moment(value).format('DD/MM/YYYY');
@@ -36,7 +33,7 @@ export class FieldDate
           return moment(value).format('HH:mm');
         },
       },
-      parser: {
+/*      parser: {
         date: function(value){
           let dt = moment(value);
 
@@ -46,7 +43,7 @@ export class FieldDate
             return null;
           }
         }
-      }
+      }*/
     }, this.field.options));
   }
   // make a form that looks amazing!
