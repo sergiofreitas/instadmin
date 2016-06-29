@@ -9,6 +9,8 @@ export function configure(aurelia) {
     .developmentLogging()
     .plugin('aurelia-flux')
     .plugin('aurelia-api', (api_config) => {
+      api_config.registerEndpoint('events', config.baseUrl+'events/')
+
       for(var key in Entities) {
           if(Entities.hasOwnProperty(key)) {
             api_config.registerEndpoint(key, Entities[key].endpoint.url);

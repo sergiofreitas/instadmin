@@ -1,0 +1,35 @@
+<template>
+  <section class="au-animate">
+    <div class="ui container">
+      <h2 class="ui header left floated">Eventos</h2>
+
+      <button class="ui button basic right floated" click.delegate="details('create')">Novo</button>
+
+
+      <div class="ui grid four column" style="clear:both">
+        <div class="column" repeat.for="item of store.items">
+          <div class="ui card">
+            <div class="content">
+              <div class="header">Detalhes do evento</div>
+              <div class="meta">
+                31/06/2016 - 05/07/2016
+              </div>
+            </div>
+            <div class="extra content">
+              <div class="ui small icon buttons">
+                <button class="ui button" click.delegate="details(item.id)">
+                  <i class="icon edit"></i>
+                </button>
+                <button class="ui button" click.delegate="destroy(item.id)">
+                  <i class="icon trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  <!--<button click.delegate="save()">Salvar item</button>-->
+  </section>
+</template>

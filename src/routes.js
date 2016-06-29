@@ -18,8 +18,10 @@ export class RouterConfig {
       route_config.map([
         { route: 'login', name: 'login', moduleId: 'pages/system/login', nav: false },
         { route: 'entity/:entity', name: 'entity_list', moduleId: 'pages/entity/list', nav: false },
-        { route: 'entity/:entity/:id',   name: 'entity_single',      moduleId: 'pages/entity/single', nav: false },
-        { route: ['', 'dashboard'], name: 'dashboard', moduleId: 'pages/dashboard/index', nav: false, title: 'Dashboard' }
+        { route: 'entity/:entity/:id', name: 'entity_single', moduleId: 'pages/entity/single', nav: false },
+        { route: ['', 'eventos'], name: 'event_list', moduleId: 'pages/eventos/list', nav: true, title: 'Eventos' },
+        { route: 'eventos/:id', name: 'event_single', moduleId: 'pages/eventos/single', nav: false },
+        /*{ route: ['', 'dashboard'], name: 'dashboard', moduleId: 'pages/dashboard/index', nav: false, title: 'Dashboard' }*/
         /*{ route: 'settings', name: 'settings', moduleId: 'pages/system/settings', nav: true, title: 'Settings' }*/
       ]);
     }

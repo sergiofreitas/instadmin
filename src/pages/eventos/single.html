@@ -1,0 +1,16 @@
+<template>
+  <require from='../../components/form-builder'></require>
+
+  <section class="au-animate">
+    <div class="ui container">
+      <h2 class="ui header">${entity.name}</h2>
+
+      <form-builder schema.bind="entity.fields" model.bind="item"></form-builder>
+
+      <div class="single-actions">
+        <button class="ui button" click.delegate="cancel()">Cancelar</button>
+        <button class="ui button primary" click.delegate="save()">Salvar</button>
+      </div>
+    </div>
+  </section>
+</template>

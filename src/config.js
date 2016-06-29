@@ -4,7 +4,7 @@
  */
 var dev = {
   title: 'SINCEP',
-  baseUrl: 'http://localhost:3000/api',
+  baseUrl: 'http://localhost:3000/api/',
   providers: {
     loginUrl: 'http://0.0.0.0:3000/api/Users/login'
   }
@@ -15,7 +15,7 @@ var dev = {
  */
 var prod = {
   title: 'SINCEP',
-  baseUrl: 'http://example.com/api',
+  baseUrl: 'http://example.com/api/',
   providers: {
     loginUrl: 'http://0.0.0.0:3000/api/Users/login'
   }

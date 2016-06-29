@@ -1,30 +1,17 @@
 import {inject} from 'aurelia-framework';
-import Entities from '../../entities/entities';
 import {Dispatcher, handle} from 'aurelia-flux';
 import {Api} from './api';
 
-@inject(Dispatcher, Entities, Api)
-export class EntityStore {
+@inject(Dispatcher, Api)
+export class EventStore {
   _items = [];
   _item = null;
   _filters = {};
 
-  constructor(dispatcher, entities, api) {
+  constructor(dispatcher, api) {
     this.dispatcher = dispatcher
-    this.entities = entities;
     this.api = api;
-  }
-
-  configure(key) {
-    // return if the configuration is ok
-    if ( !this.entities[key] ){
-      return false;
-    }
-
-    this.entity = this.entities[key];
-    this.entity.key = key;
-    this.api.configure(this.entity);
-    return this.entity;
+    this.api.configure('events');
   }
 
   get items() {
@@ -55,7 +42,6 @@ export class EntityStore {
   @handle('entities.get')
   getItem(action, item) {
     this.dispatcher.dispatch('entities.get.start');
-    this._item = this._items.find(obj => obj.id === item);
 
     return this.api.get(item)
       .then(response => {

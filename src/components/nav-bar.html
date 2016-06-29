@@ -2,6 +2,7 @@
   <div class="ui top fixed menu borderless">
     <div class="header item">${router.title}</div>
     <a repeat.for="row of router.navigation" href.bind="row.href" class="item ${row.isActive ? 'active' : ''}">${row.title}</a>
+    
     <a repeat.for="entity of entities" class="item" href="#/entity/${entity.key}">${entity.name}</a>
 
     <div class="right menu">
