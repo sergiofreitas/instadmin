@@ -3,9 +3,9 @@
 
   <section class="au-animate">
     <div class="ui container">
-      <h2 class="ui header">${entity.name}</h2>
+      <h2 class="ui header">Eventos</h2>
 
-      <form-builder schema.bind="entity.fields" model.bind="item"></form-builder>
+      <form-builder schema.bind="fields" model.two-way="item"></form-builder>
 
       <div class="single-actions">
         <button class="ui button" click.delegate="cancel()">Cancelar</button>

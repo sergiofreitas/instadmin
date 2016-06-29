@@ -6,6 +6,7 @@ import {Api} from './api';
 @inject(Dispatcher, Entities, Api)
 export class EntityStore {
   _items = [];
+  _events = [];
   _item = null;
   _filters = {};
 
@@ -31,12 +32,29 @@ export class EntityStore {
     return this._items;
   }
 
+  get events() {
+    return this._events;
+  }
+
   get item() {
     return this._item;
   }
 
   get filters() {
     return this._filters;
+  }
+
+  @handle('entities.init')
+  initItems(action) {
+    this.dispatcher.dispatch('entities.init.start');
+
+    this.api.events.find('')
+      .then(items => {
+        this._events = items;
+        this.dispatcher.dispatch('entities.init.done', items);
+      }).catch(err => {
+        this.dispatcher.dispatch('entities.init.error', err);
+      });
   }
 
   @handle('entities.fetch')
@@ -81,6 +99,8 @@ export class EntityStore {
   @handle('entities.filter')
   defineFilter(action, filters) {
     this._filters = filters;
+
+    return this.dispatcher.dispatch('entities.fetch');
   }
 
   @handle('entities.create')

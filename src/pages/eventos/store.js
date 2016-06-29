@@ -1,8 +1,9 @@
 import {inject} from 'aurelia-framework';
 import {Dispatcher, handle} from 'aurelia-flux';
-import {Api} from './api';
+import {Config} from 'aurelia-api';
+import moment from 'moment';
 
-@inject(Dispatcher, Api)
+@inject(Dispatcher, Config)
 export class EventStore {
   _items = [];
   _item = null;
@@ -10,8 +11,7 @@ export class EventStore {
 
   constructor(dispatcher, api) {
     this.dispatcher = dispatcher
-    this.api = api;
-    this.api.configure('events');
+    this.api = api.getEndpoint('events');
   }
 
   get items() {
@@ -26,85 +26,99 @@ export class EventStore {
     return this._filters;
   }
 
-  @handle('entities.fetch')
-  getItems(action, options) {
-    this.dispatcher.dispatch('entities.fetch.start');
+  transformTo(item) {
+    let newItem = Object.assign({}, item);
 
-    return this.api.find({filter: this.filters})
+    newItem.start = moment(newItem.start, 'DD/MM/YYYY').format();
+    newItem.end = moment(newItem.end, 'DD/MM/YYYY').format();
+    console.log(item);
+    console.log(newItem);
+    return newItem;
+  }
+
+  @handle('event.fetch')
+  getItems(action, options) {
+    this.dispatcher.dispatch('event.fetch.start');
+
+    return this.api.find('', {filter: this.filters})
       .then(items => {
         this._items = items;
-        this.dispatcher.dispatch('entities.fetch.done', items);
+        this.dispatcher.dispatch('event.fetch.done', items);
       }).catch(err => {
-        this.dispatcher.dispatch('entities.fetch.error', err);
+        this.dispatcher.dispatch('event.fetch.error', err);
       });
   }
 
-  @handle('entities.get')
+  @handle('event.get')
   getItem(action, item) {
-    this.dispatcher.dispatch('entities.get.start');
+    this.dispatcher.dispatch('event.get.start');
 
-    return this.api.get(item)
+    return this.api.find(item)
       .then(response => {
         this._item = response;
-        this.dispatcher.dispatch('entities.get.done', this._item);
+        this.dispatcher.dispatch('event.get.done', this._item);
       }).catch(err => {
-        this.dispatcher.dispatch('entities.get.error', err);
+        this.dispatcher.dispatch('event.get.error', err);
       });
 
 /*    if ( this._item ){
-      this.dispatcher.dispatch('entities.get.done', this._item);
+      this.dispatcher.dispatch('event.get.done', this._item);
     } else {
       return this.api.get(item)
         .then(response => {
           this._item = response;
-          this.dispatcher.dispatch('entities.get.done', this._item);
+          this.dispatcher.dispatch('event.get.done', this._item);
         }).catch(err => {
-          this.dispatcher.dispatch('entities.get.error', err);
+          this.dispatcher.dispatch('event.get.error', err);
         });
     }*/
   }
 
-  @handle('entities.filter')
+  @handle('event.filter')
   defineFilter(action, filters) {
     this._filters = filters;
   }
 
-  @handle('entities.create')
+  @handle('event.create')
   createItem(action, item) {
-    this.dispatcher.dispatch('entities.create.start');
-    // send data to server
-    return this.api.post(item)
+    this.dispatcher.dispatch('event.create.start');
+
+    item = this.transformTo(item);
+
+    return this.api.post('', item)
       .then(response => {
-        this.dispatcher.dispatch('entities.create.done', response);
+        this.dispatcher.dispatch('event.create.done', response);
       })
       .catch(err => {
-        this.dispatcher.dispatch('entities.create.error', err);
+        this.dispatcher.dispatch('event.create.error', err);
       });
   }
 
-  @handle('entities.update')
+  @handle('event.update')
   editItem(action, payload){
-    this.dispatcher.dispatch('entities.update.start');
-    // send data to server
-    return this.api.update(payload.criteria, payload.item)
+    this.dispatcher.dispatch('event.update.start');
+
+    payload.item = this.transformTo(payload.item);
+
+    return this.api.update('', payload.criteria, payload.item)
       .then(response => {
-        this.dispatcher.dispatch('entities.update.done', response);
+        this.dispatcher.dispatch('event.update.done', response);
       })
       .catch(err => {
-        this.dispatcher.dispatch('entities.update.error', err);
+        this.dispatcher.dispatch('event.update.error', err);
       });
   }
 
-  @handle('entities.destroy')
+  @handle('event.destroy')
   destroyItem(action, item){
-    this.dispatcher.dispatch('entities.destroy.start');
+    this.dispatcher.dispatch('event.destroy.start');
     // send data to server
-    return this.api.destroy(item)
+    return this.api.destroy('', item)
       .then(response => {
-        this.dispatcher.dispatch('entities.destroy.done', response);
+        this.dispatcher.dispatch('event.destroy.done', response);
       })
       .catch(err => {
-        this.dispatcher.dispatch('entities.destroy.error', err);
+        this.dispatcher.dispatch('event.destroy.error', err);
       });
   }
 

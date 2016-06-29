@@ -26,7 +26,7 @@ export class EventList {
   }
 
   loadPage(page) {
-    return this.dispatcher.dispatch('entities.fetch', page);
+    return this.dispatcher.dispatch('event.fetch', page);
   }
 
   details(item_id) {
@@ -34,36 +34,36 @@ export class EventList {
   }
 
   destroy(id) {
-    return this.dispatcher.dispatch('entities.destroy', id);
+    return this.dispatcher.dispatch('event.destroy', id);
   }
 
 
 
-  @handle('entities.*.start')
+  @handle('event.*.start')
   lockUI(action, state) {
     this.loading = true;
 
     console.log('starting something', action);
   }
 
-  @handle('entities.*.done')
+  @handle('event.*.done')
   unlockUI(action, state) {
     this.loading = false;
 
     var refreshActions = [
-      'entities.create.done',
-      'entities.update.done',
-      'entities.destroy.done'
+      'event.create.done',
+      'event.update.done',
+      'event.destroy.done'
     ];
 
     if ( refreshActions.indexOf(action) !== -1 ){
-      this.dispatcher.dispatch('entities.fetch', 1);
+      this.dispatcher.dispatch('event.fetch', 1);
     }
 
     console.log('called the action', action);
   }
 
-  @handle('entities.*.error')
+  @handle('event.*.error')
   errorUI(action, state) {
     console.log('an error occour', action, state);
   }
@@ -73,31 +73,8 @@ export class EventList {
   */
 }
 
-export class TransformValueConverter {
-  conversions = {
-    text: function(value, column) {
-      if ( value && column.options && column.options.maxlength ){
-          value = value.replace(/(<([^>]+)>)/ig,"");
-          let truncated = value.substring(0, column.options.maxlength);
-          if ( truncated != value ) {
-            truncated += '...';
-          }
-          return truncated;
-      }
-      return value;
-    },
-    image: function(value){
-      return '<img src="'+value+'"/>';
-    },
-    select: function(value, column){
-      return column.options.choices[value] || value;
-    },
-    date: function(value, column) {
-      return moment(value).format(column.options.format);
-    }
-  };
-
-  toView(value, column) {
-    return this.conversions[column.type](value, column);
+export class DateValueConverter {
+  toView(value, format) {
+    return moment(value).format(format);
   }
 }

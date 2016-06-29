@@ -1,11 +1,12 @@
 import {inject} from 'aurelia-framework';
-import {Config} from 'aurelia-api';
+import {Config, Endpoint} from 'aurelia-api';
 
-@inject(Config)
+@inject(Config, Endpoint.of('events'))
 export class Api {
 
-  constructor(config) {
+  constructor(config, events) {
     this.config = config;
+    this.events = events;
   }
 
   configure(entity) {

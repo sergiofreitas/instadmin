@@ -9,24 +9,30 @@
       <div class="ui grid four column" style="clear:both">
         <div class="column" repeat.for="item of store.items">
           <div class="ui card">
+            <div class="image">
+              <img src.bind="item.avatar">
+            </div>
             <div class="content">
-              <div class="header">Detalhes do evento</div>
+              <div class="header">${item.name}</div>
               <div class="meta">
-                31/06/2016 - 05/07/2016
+                ${item.start | date:'DD/MM/YYYY'} - ${item.end | date:'DD/MM/YYYY'}
               </div>
             </div>
             <div class="extra content">
-              <div class="ui small icon buttons">
-                <button class="ui button" click.delegate="details(item.id)">
-                  <i class="icon edit"></i>
-                </button>
-                <button class="ui button" click.delegate="destroy(item.id)">
-                  <i class="icon trash"></i>
-                </button>
-              </div>
+              <a class="left floated" click.delegate="details(item.id)">
+                <i class="icon edit"></i> Editar
+              </a>
+              <a class="right floated" click.delegate="destroy(item.id)">
+                <i class="icon trash"></i> Remover
+              </a>
             </div>
           </div>
         </div>
+      </div>
+
+
+      <div class="ui header center aligned" if.bind="!store.items.length">
+        Nenhum evento encontrado
       </div>
 
     </div>

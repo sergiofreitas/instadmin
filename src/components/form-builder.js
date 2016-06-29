@@ -11,9 +11,9 @@ export class FormBuilder
   fields = [];
   bind() {
     this.schema.map(f => {
-
       // define the template
       f.template = this.setTemplate(f);
+
       this.fields.push(f);
     });
   }

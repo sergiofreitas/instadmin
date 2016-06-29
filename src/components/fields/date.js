@@ -1,13 +1,24 @@
+import {inject, BindingEngine} from 'aurelia-framework';
 import moment from 'moment';
 
+@inject(BindingEngine)
 export class FieldDate
 {
+  constructor(bindingEngine) {
+    this.value = '';
+
+    let subscription = bindingEngine.propertyObserver(this, 'value')
+      .subscribe((newValue, oldValue) => this.field.model[this.field.key] = newValue);
+
+  }
+
   activate(data) {
     this.field = data;
+    console.log(this.field.model);
   }
 
   attached() {
-    $('.ui.calendar').calendar({
+    $('.ui.calendar').calendar(Object.assign({
       text: {
         days: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
         months: 'Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro'.split('_'),
@@ -28,6 +39,7 @@ export class FieldDate
       parser: {
         date: function(value){
           let dt = moment(value);
+
           if ( dt.isValid() ){
             return dt.toDate();
           } else {
@@ -35,8 +47,7 @@ export class FieldDate
           }
         }
       }
-    })
-    //rome(this.input, Object.assign(defaults, this.field.options));
+    }, this.field.options));
   }
   // make a form that looks amazing!
 }

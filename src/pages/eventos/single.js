@@ -1,11 +1,10 @@
 import {inject} from 'aurelia-framework';
 import {Dispatcher, handle} from 'aurelia-flux';
 import {Router} from 'aurelia-router';
-import {EntityStore} from './store';
+import {EventStore} from './store';
 
-
-@inject(Dispatcher, Router, EntityStore)
-export class EntitySingle {
+@inject(Dispatcher, Router, EventStore)
+export class EventSingle {
   entity = null;
   isNew = false;
   item = {};
@@ -14,35 +13,44 @@ export class EntitySingle {
     this.dispatcher = dispatcher;
     this.router = router;
     this.store = store;
+    this.fields = [
+      {key: 'name', label: 'Nome', type: 'text'},
+      {key: 'avatar', label: 'Imagem', type: 'text'},
+      {key: 'start', label: 'Inicio', type: 'text', options: {type: 'date'}},
+      {key: 'end', label: 'Fim', type: 'text', options: {type: 'date'}},
+      {key: 'description', label: 'Descrição', type: 'textarea'},
+      {key: 'status', label: 'Status', type: 'select', choices: {
+        'draft': 'draft',
+        'published': 'published'
+      }}
+    ]
+
+    this.fields.map(f => {
+      this.item[f.key] = '';
+    });
   }
 
   activate(params) {
-    this.entity = this.store.configure(params.entity);
-    if ( !this.entity ){
-      console.log('notify error');
-      this.router.navigate('dashboard');
-    }
-
     if ( params.id !== 'create' ){
-      return this.dispatcher.dispatch('entities.get', params.id);
+      return this.dispatcher.dispatch('event.get', params.id);
     } else {
       this.isNew = true;
     }
   }
 
   cancel() {
-    return this.router.navigateToRoute('entity_list', {entity: this.entity.key});
+    return this.router.navigateToRoute('event_list');
   }
 
   save() {
     if (this.isNew) {
-      return this.dispatcher.dispatch('entities.create', this.item);
+      return this.dispatcher.dispatch('event.create', this.item);
     } else {
-      return this.dispatcher.dispatch('entities.update', {criteria: this.item.id, item: this.item});
+      return this.dispatcher.dispatch('event.update', {criteria: this.item.id, item: this.item});
     }
   }
 
-  @handle('entities.*.start')
+  @handle('event.*.start')
   lockUI(action, state) {
     this.loading = true;
 
@@ -50,33 +58,33 @@ export class EntitySingle {
     // caso queira mostrar alguma informacao, utilize o action
   }
 
-  @handle('entities.get.done')
+  @handle('event.get.done')
   populate(action, state){
     this.item = state;
   }
 
-  @handle('entities.*.done')
+  @handle('event.*.done')
   unlockUI(action, state) {
     this.loading = false;
 
     var refreshActions = [
-      'entities.create.done',
-      'entities.update.done',
-      'entities.destroy.done'
+      'event.create.done',
+      'event.update.done',
+      'event.destroy.done'
     ];
 
     console.log('called the action', action, state);
 
     if ( refreshActions.indexOf(action) !== -1 ){
-      return this.router.navigateToRoute('entity_list', {entity: this.entity.key});
+      return this.router.navigateToRoute('event_list');
     }
   }
 
-  @handle('entities.*.error')
+  @handle('event.*.error')
   errorUI(action, state) {
     this.loading = false;
 
     console.log('an error occour', action, state);
-    return this.router.navigateToRoute('entity_list', {entity: this.entity.key});
+    return this.router.navigateToRoute('event_list');
   }
 }

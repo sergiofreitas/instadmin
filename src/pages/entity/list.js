@@ -8,6 +8,7 @@ import moment from 'moment';
 @inject(Dispatcher, Router, EntityStore)
 export class EntityList {
   entity = null;
+  activeEvent = null;
   rows = [];
 
   constructor(dispatcher, router, store) {
@@ -24,15 +25,15 @@ export class EntityList {
       this.router.navigate('dashboard');
     }
 
-    return this.loadPage(1);
+    return this.dispatcher.dispatch('entities.init');
   }
 
   attached() {
     // sortable stuff
   }
 
-  loadPage(page) {
-    return this.dispatcher.dispatch('entities.fetch', page);
+  loadPage() {
+    return this.dispatcher.dispatch('entities.fetch');
   }
 
   details(item_id) {
@@ -43,6 +44,21 @@ export class EntityList {
     return this.dispatcher.dispatch('entities.destroy', id);
   }
 
+  changeEvent(event) {
+    var filter = {
+      where: {
+        eventId: event.id
+      }
+    };
+    this.activeEvent = event;
+    return this.dispatcher.dispatch('entities.filter', filter);
+  }
+
+
+  @handle('entities.init.done')
+  loadList() {
+    this.changeEvent(this.store.events[0]);
+  }
 
 
   @handle('entities.*.start')
