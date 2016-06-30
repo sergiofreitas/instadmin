@@ -16,13 +16,14 @@ export class EventSingle {
     this.fields = [
       {key: 'name', label: 'Nome', type: 'text'},
       {key: 'avatar', label: 'Imagem', type: 'text'},
-      {key: 'start', label: 'Inicio', type: 'text', options: {type: 'date'}},
-      {key: 'end', label: 'Fim', type: 'text', options: {type: 'date'}},
+      {key: 'start', label: 'Inicio', type: 'date', options: {type: 'date'}},
+      {key: 'end', label: 'Fim', type: 'date', options: {type: 'date'}},
       {key: 'description', label: 'Descrição', type: 'textarea'},
       {key: 'status', label: 'Status', type: 'select', choices: {
         'draft': 'draft',
         'published': 'published'
-      }}
+      }},
+      {key: 'introId', label: 'Pagina inicial', type: 'select', remote: {endpoint: 'contents', label: 'title'}}
     ]
 
     this.fields.map(f => {

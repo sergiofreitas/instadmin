@@ -27,13 +27,7 @@ export class EventStore {
   }
 
   transformTo(item) {
-    let newItem = Object.assign({}, item);
-
-    newItem.start = moment(newItem.start, 'DD/MM/YYYY').format();
-    newItem.end = moment(newItem.end, 'DD/MM/YYYY').format();
-    console.log(item);
-    console.log(newItem);
-    return newItem;
+    return item;
   }
 
   @handle('event.fetch')
