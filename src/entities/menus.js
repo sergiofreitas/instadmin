@@ -15,7 +15,6 @@ var entity = {
   },
   columns: [
     {key: 'title', label: 'Titulo', type: 'text'},
-    {key: 'route', label: 'Rota', type: 'text'},
     {key: 'icon', label: 'Ícone', type: 'text'},
     {key: 'order', label: 'Ordem', type: 'text'},
     {key: 'status', label: 'Status', type: 'select', options: {choices: {'published': 'Publicado', 'draft': 'Rascunho'}}}
