@@ -19,26 +19,29 @@
         </div>
 
         <div class="thirteen wide column">
-          <table class="ui celled padded table">
+          <table class="ui celled sortable padded table">
             <thead>
               <tr>
-                <th repeat.for="column of entity.columns">${column.label}</th>
+                <th repeat.for="column of entity.columns" click.delegate="sort(column.key)" class="${sortBy == column.key ? ascending ? 'sorted descending' : 'sorted ascending' : ''}">${column.label}</th>
                 <th>Ações</th>
               </tr>
             </thead>
 
             <tbody>
-              <tr repeat.for="item of store.items">
+              <tr repeat.for="item of store.items | sort:sortBy:ascending">
                 <td repeat.for="column of entity.columns">
                   ${item[column.key] | transform:column}
                 </td>
                 <td>
                   <!--<input type="checkbox" name="select" value.bind="item.id" checked.bind="$parent.selectedRows">-->
                   <div class="ui small icon buttons">
-                    <button class="ui button" click.delegate="details(item.id)">
-                      <i class="icon edit"></i>
+                    <button class="ui button" click.delegate="details(item.id)" title="editar">
+                      <i class="icon write"></i>
                     </button>
-                    <button class="ui button" click.delegate="destroy(item.id)">
+                    <button class="ui button" click.delegate="duplicate(item)" title="duplicar">
+                      <i class="icon share"></i>
+                    </button>
+                    <button class="ui button" click.delegate="destroy(item.id)" title="remover">
                       <i class="icon trash"></i>
                     </button>
                   </div>

@@ -32,6 +32,32 @@ body.login-page {
   background: #fff;
 }
 
+.ui.nag {
+  max-width: 600px;
+  margin: auto;
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  margin-left: -300px;
+  z-index: 1;
+  background: #777;
+}
+
+.ui.nag.active {
+  display: block;
+}
+
+.ui.nag.success {
+  background: #21BA45!important;
+}
+
+.ui.nag.error {
+  background: #DB2828!important;
+}
+
+
+
+
 /* calendar */
 /*******************************
             Popup

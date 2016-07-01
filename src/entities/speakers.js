@@ -20,7 +20,7 @@ var entity = {
   fields: [
     {key: 'name', label: 'Nome', type: 'text'},
     {key: 'role', label: 'Titulo', type: 'text'},
-    {key: 'avatar', label: 'Imagem', type: 'text'},
+    {key: 'avatar', label: 'Imagem', type: 'file'},
     {key: 'bio', label: "Biografia", type: 'textarea', options: {wysiwyg: true}},
     {key: 'eventId', label: 'Evento', type: 'select', remote: {endpoint: 'events', label: 'name'}},
   ]

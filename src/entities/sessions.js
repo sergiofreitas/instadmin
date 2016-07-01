@@ -24,7 +24,6 @@ var entity = {
     {key: 'date', label: 'Data', type: 'date'},
     {key: 'description', label: "Descrição", type: 'textarea'},
     {key: 'eventId', label: 'Evento', type: 'select', remote: {endpoint: 'events', label: 'name'}},
-    {key: 'eventId', label: 'Evento', type: 'select', remote: {endpoint: 'events', label: 'name'}, multiple: true},
   ]
 }
 

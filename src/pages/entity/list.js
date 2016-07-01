@@ -10,6 +10,8 @@ export class EntityList {
   entity = null;
   activeEvent = null;
   rows = [];
+  sortBy = '';
+  ascending = true;
 
   constructor(dispatcher, router, store) {
       this.dispatcher = dispatcher;
@@ -19,6 +21,8 @@ export class EntityList {
   }
 
   activate(params) {
+    this.sortBy = '';
+    this.ascending = true;
     this.entity = this.store.configure(params.entity);
     if ( !this.entity ){
       console.log('notify error');
@@ -28,8 +32,13 @@ export class EntityList {
     return this.dispatcher.dispatch('entities.init');
   }
 
+  sort(value) {
+    this.ascending = this.sortBy === value ? !this.ascending : true;
+    this.sortBy = value;
+  }
+
   attached() {
-    // sortable stuff
+    this.sortBy = this.entity.columns[0].key;
   }
 
   loadPage() {
@@ -42,6 +51,12 @@ export class EntityList {
 
   destroy(id) {
     return this.dispatcher.dispatch('entities.destroy', id);
+  }
+
+  duplicate(item) {
+    let cloned = Object.assign({}, item);
+    delete cloned.id;
+    return this.dispatcher.dispatch('entities.create', cloned);
   }
 
   changeEvent(event) {
@@ -94,6 +109,20 @@ export class EntityList {
   @handle('message.*') <-- use this for output all messages for client
   */
 }
+
+export class SortValueConverter {
+    toView(arr, prop, ascending) {
+        let arrCopy = arr.slice(0, arr.length);
+        let sorted = arrCopy.sort((a, b) => {
+            if (a[prop] > b[prop]) return 1;
+            if (a[prop] < b[prop]) return -1;
+            return 0;
+        });
+
+        return ascending ? sorted : sorted.reverse();
+    }
+}
+
 
 export class TransformValueConverter {
   conversions = {

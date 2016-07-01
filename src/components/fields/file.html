@@ -1,0 +1,10 @@
+<template>
+  <label for.bind="field.key">${field.label}</label>
+  <div class="ui fluid action input">
+      <input type="text" readonly value.bind="value" ref="visual">
+      <input type="file" style="display: none" ref="file">
+      <div class="ui icon button" ref="button">
+          <i class="cloud upload icon"></i>
+      </div>
+   </div>
+</template>

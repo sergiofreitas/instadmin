@@ -2,6 +2,7 @@
   <require from="./fields/date"></require>
   <require from="./fields/select"></require>
   <require from="./fields/text"></require>
+  <require from="./fields/file"></require>
   <require from="./fields/textarea"></require>
 
   <div class="ui form">
@@ -9,6 +10,7 @@
       <field-date if.bind="field.type == 'date'" value.two-way="model[field.key]" field.bind="field" class="sixteen wide field"></field-date>
       <field-select if.bind="field.type == 'select'" value.two-way="model[field.key]" field.bind="field" class="sixteen wide field"></field-select>
       <field-text if.bind="field.type == 'text'" value.two-way="model[field.key]" field.bind="field" class="sixteen wide field"></field-text>
+      <field-file if.bind="field.type == 'file'" value.two-way="model[field.key]" field.bind="field" class="sixteen wide field"></field-file>
       <field-textarea if.bind="field.type == 'textarea'" value.two-way="model[field.key]" field.bind="field" class="sixteen wide field"></field-textarea>
     </div>
     <!--<compose repeat.for="field of fields" model.bind="field" view-model.bind="field.template" class="field"></compose>-->
